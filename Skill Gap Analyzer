@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Check Your Skills for a Career in Data Science / DevOps</title>
+  <meta name="description" content="Use this Skill Gap Analyzer to see if you're ready for a career in Data Science, Full Stack Development or AWS & DevOps. Learn what skills you're missing.">
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f9fbfd;
+      padding: 30px;
+      max-width: 800px;
+      margin: auto;
+    }
+    h1, h2 {
+      color: #2c3e50;
+      text-align: center;
+    }
+    label {
+      font-weight: bold;
+      margin-top: 20px;
+      display: block;
+    }
+    select, input[type=range], input[type=number], button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 8px;
+      font-size: 16px;
+    }
+    input[type=range] {
+      margin-bottom: 10px;
+    }
+    button {
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    #output {
+      margin-top: 30px;
+      padding: 20px;
+      background-color: #e6f9ed;
+      border-radius: 6px;
+      color: #1c4435;
+      display: none;
+    }
+    .skill-label {
+      margin-top: 15px;
+    }
+    .why-choose {
+      background-color: #fff3cd;
+      padding: 20px;
+      margin-top: 40px;
+      border: 1px solid #ffeeba;
+      border-radius: 6px;
+    }
+    .why-choose ul {
+      padding-left: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>🧠 Check Your Skills for a Career in Data Science / DevOps</h1>
+  <p>Want to know how ready you are for a tech career? Use this free skill gap analyzer to evaluate your current knowledge against the skills required in <strong>Data Science</strong>, <strong>Full Stack Development</strong>, and <strong>AWS & DevOps</strong>. Ideal for anyone looking for <strong>data science training in Pune with placement</strong>.</p>
+
+  <label for="track">Choose a Career Track:</label>
+  <select id="track" onchange="renderSkills()">
+    <option value="">-- Select Course --</option>
+    <option value="datasci">Data Science</option>
+    <option value="fullstack">Full Stack Developer</option>
+    <option value="awsdevops">AWS & DevOps</option>
+  </select>
+
+  <form id="skillsForm" style="display:none;">
+    <div id="skillsContainer"></div>
+    <button type="button" onclick="generateReport()">Generate Skill Report</button>
+  </form>
+
+  <div id="output"></div>
+
+  <div class="why-choose">
+    <h2>🚀 Why Choose Skills IT Academy?</h2>
+    <ul>
+      <li>✅ Industry-Ready Curriculum for Beginners</li>
+      <li>✅ Personalized Mentorship & Project Support</li>
+      <li>✅ 100% Placement Assistance in Pune & Remote</li>
+      <li>✅ Learn via Classroom + Online Sessions</li>
+      <li>✅ Affordable Pricing & EMI Options</li>
+    </ul>
+  </div>
+
+  <script>
+    const skillsData = {
+      datasci: ["Python Basics", "Data Analysis (Pandas/Numpy)", "Machine Learning", "Data Visualization", "SQL", "Statistics & Probability"],
+      fullstack: ["HTML/CSS", "JavaScript", "React or Angular", "Java/Python Backend", "Database (SQL/MongoDB)", "Git/GitHub"],
+      awsdevops: ["Linux Commands", "AWS Core Services", "CI/CD Tools (Jenkins, Git)", "Docker", "Kubernetes Basics", "Cloud Monitoring"]
+    };
+
+    function renderSkills() {
+      const track = document.getElementById("track").value;
+      const container = document.getElementById("skillsContainer");
+      const form = document.getElementById("skillsForm");
+      container.innerHTML = "";
+
+      if (!track) {
+        form.style.display = "none";
+        return;
+      }
+
+      const skills = skillsData[track];
+      skills.forEach(skill => {
+        container.innerHTML += `
+          <label class="skill-label">${skill} (Rate 0-10)</label>
+          <input type="number" min="0" max="10" step="1" value="5" name="${skill}" />
+        `;
+      });
+      form.style.display = "block";
+    }
+
+    function generateReport() {
+      const track = document.getElementById("track").value;
+      const inputs = document.querySelectorAll("#skillsForm input[type=number]");
+      let total = 0;
+
+      inputs.forEach(input => total += parseInt(input.value));
+      const maxScore = inputs.length * 10;
+      const percentage = Math.round((total / maxScore) * 100);
+
+      let message = `<strong>📊 Skill Readiness Score: ${percentage}%</strong><br><br>`;
+
+      if (percentage >= 80) {
+        message += `✅ You're highly ready for this career track. Start building real-world projects now!`;
+      } else if (percentage >= 60) {
+        message += `🟡 You have the basics! Join our course to strengthen your skills and get job-ready.`;
+      } else {
+        message += `🔴 Looks like you're just starting. We recommend joining our beginner-friendly course in ${track === 'datasci' ? 'Data Science' : track === 'awsdevops' ? 'DevOps' : 'Full Stack Development'}.`;
+      }
+
+      message += `<br><br>👉 <a href='/contact' style='color:#007bff;'>Talk to an expert now</a>`;
+      const output = document.getElementById("output");
+      output.innerHTML = message;
+      output.style.display = "block";
+    }
+  </script>
+</body>
+</html>
+
